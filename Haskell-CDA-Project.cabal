@@ -25,7 +25,7 @@ extra-source-files:
 
 library
     exposed-modules:
-        Src.Utils.FileChecker
+        FileChecker
 
     -- Modules included in this library but not exported.
     -- other-modules:
@@ -37,14 +37,15 @@ library
         bytestring ^>=0.11.3.1,
         text ^>=1.2.5.0
 
-    hs-source-dirs:   app
+    hs-source-dirs:   src
     default-language: Haskell2010
 
 executable Haskell-CDA-Project
     main-is:          Main.hs
 
     -- Modules included in this executable, other than Main.
-    -- other-modules:
+    other-modules:
+        FileChecker
 
     -- LANGUAGE extensions used by modules in this package.
     -- other-extensions:
@@ -53,5 +54,5 @@ executable Haskell-CDA-Project
         bytestring ^>=0.11.3.1,
         text ^>=1.2.5.0
 
-    hs-source-dirs:   app
+    hs-source-dirs:   src
     default-language: Haskell2010
