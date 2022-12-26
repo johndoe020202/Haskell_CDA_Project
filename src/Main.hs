@@ -1,5 +1,5 @@
 module Main where
- import FileChecker
+ import Helpers
  import System.IO               (hFlush, stdout)
 
  main :: IO()
@@ -11,6 +11,7 @@ module Main where
    putStrLn("   -hf: calculate the SHA 256 hash of an existing file")
    putStrLn("   -cf: compare two files passed as input")
    putStrLn("   -m: create a Merkle tree from a list of strings separated by a single space")
+   putStrLn("   -q: quit" )
    line <- getLine
-   print ("The user input is:")
-   print (line)
+   putStrLn ("The user choice is:")
+   putStrLn (line)
