@@ -20,6 +20,16 @@
   (major1) == 4 && (major2) <  16 || \
   (major1) == 4 && (major2) == 16 && (minor) <= 4)
 #endif /* MIN_VERSION_base */
+/* package basement-0.0.15 */
+#ifndef VERSION_basement
+#define VERSION_basement "0.0.15"
+#endif /* VERSION_basement */
+#ifndef MIN_VERSION_basement
+#define MIN_VERSION_basement(major1,major2,minor) (\
+  (major1) <  0 || \
+  (major1) == 0 && (major2) <  0 || \
+  (major1) == 0 && (major2) == 0 && (minor) <= 15)
+#endif /* MIN_VERSION_basement */
 /* package bytestring-0.11.3.1 */
 #ifndef VERSION_bytestring
 #define VERSION_bytestring "0.11.3.1"
@@ -30,6 +40,36 @@
   (major1) == 0 && (major2) <  11 || \
   (major1) == 0 && (major2) == 11 && (minor) <= 3)
 #endif /* MIN_VERSION_bytestring */
+/* package cryptonite-0.30 */
+#ifndef VERSION_cryptonite
+#define VERSION_cryptonite "0.30"
+#endif /* VERSION_cryptonite */
+#ifndef MIN_VERSION_cryptonite
+#define MIN_VERSION_cryptonite(major1,major2,minor) (\
+  (major1) <  0 || \
+  (major1) == 0 && (major2) <  30 || \
+  (major1) == 0 && (major2) == 30 && (minor) <= 0)
+#endif /* MIN_VERSION_cryptonite */
+/* package ghc-prim-0.8.0 */
+#ifndef VERSION_ghc_prim
+#define VERSION_ghc_prim "0.8.0"
+#endif /* VERSION_ghc_prim */
+#ifndef MIN_VERSION_ghc_prim
+#define MIN_VERSION_ghc_prim(major1,major2,minor) (\
+  (major1) <  0 || \
+  (major1) == 0 && (major2) <  8 || \
+  (major1) == 0 && (major2) == 8 && (minor) <= 0)
+#endif /* MIN_VERSION_ghc_prim */
+/* package memory-0.18.0 */
+#ifndef VERSION_memory
+#define VERSION_memory "0.18.0"
+#endif /* VERSION_memory */
+#ifndef MIN_VERSION_memory
+#define MIN_VERSION_memory(major1,major2,minor) (\
+  (major1) <  0 || \
+  (major1) == 0 && (major2) <  18 || \
+  (major1) == 0 && (major2) == 18 && (minor) <= 0)
+#endif /* MIN_VERSION_memory */
 /* package text-1.2.5.0 */
 #ifndef VERSION_text
 #define VERSION_text "1.2.5.0"
