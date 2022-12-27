@@ -3,7 +3,9 @@ module Main where
  import System.IO               (hFlush, stdout)
 
  main :: IO()
- main = do
+ main = 
+  do
+   putStrLn("")
    putStrLn("---- HashHelper program ----")
    putStrLn("A simple utility tool for calculating hashes of strings or files, creating Merkle trees from various values and comparing files based on hash")
    putStrLn("Available command switches: ")
@@ -12,6 +14,5 @@ module Main where
    putStrLn("   -cf: compare two files passed as input")
    putStrLn("   -m: create a Merkle tree from a list of strings separated by a single space")
    putStrLn("   -q: quit" )
-   line <- getLine
-   putStrLn ("The user choice is:")
-   putStrLn (line)
+   line <- getStrLine
+    let v = isValid $ checkSwitch line
