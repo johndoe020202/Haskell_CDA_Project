@@ -1,9 +1,10 @@
 module Helpers where
  
- data SwitchType = StringHash | FileHash | CompareFiles | MerkleTree | Quit | Invalid deriving Show
-
- data Choice = Choice SwitchType Bool deriving Show
-
+ data SwitchType = StringHash | FileHash | CompareFiles | MerkleTree | Quit | Invalid deriving (Show, Eq)
+ data Choice = Choice { 
+   switch :: SwitchType, 
+   isValid:: Bool
+  } deriving Show
 
  checkSwitch :: String -> Choice 
  checkSwitch value 
