@@ -1,7 +1,6 @@
 module Main where
  import Helpers
  import HashHelpers
- import FileChecker
  import System.IO               (hFlush, stdout)
  import qualified Data.ByteString.Lazy as LazyByteString
  
@@ -44,7 +43,7 @@ module Main where
                   putStrLn("Enter a list of strings separated by the character you just provided:")
                   strLn <- getLine
                   putStrLn("Result:")
-                  print $ splitStringIntoList sep strLn
+                  print $ splitStringIntoList strLn (\s -> head sep)
                   main   
         "0" -> do putStrLn("exited") 
   
