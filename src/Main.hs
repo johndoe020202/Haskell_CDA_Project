@@ -1,6 +1,7 @@
 module Main where
  import Helpers
  import HashHelpers
+ import FileChecker
  import System.IO               (hFlush, stdout)
  import qualified Data.ByteString.Lazy as LazyByteString
  
@@ -29,6 +30,22 @@ module Main where
                   putStrLn ("Resulting file hash is:") 
                   print $ computeLazyByteStringHash $ fileContent
                   main
+        "3" -> do putStrLn("Enter the first existing file path: ")
+                  filePath1 <- getLine
+                  putStrLn("Enter the second existing file path: ")
+                  filePath2 <- getLine
+                  fileContent1 <- LazyByteString.readFile filePath1
+                  fileContent2 <- LazyByteString.readFile filePath2
+                  putStrLn ("Comparison result:")
+                  print $ compareFiles fileContent1 fileContent2
+                  main
+        "4" -> do putStrLn("Enter a separator character: ")
+                  sep <- getLine
+                  putStrLn("Enter a list of strings separated by the character you just provided:")
+                  strLn <- getLine
+                  putStrLn("Result:")
+                  print $ splitStringIntoList sep strLn
+                  main   
         "0" -> do putStrLn("exited") 
   
 

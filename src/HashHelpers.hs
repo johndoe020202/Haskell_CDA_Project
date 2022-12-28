@@ -13,3 +13,6 @@ module HashHelpers where
 
  computeLazyByteStringHash :: LazyByteString.ByteString  -> Digest SHA256
  computeLazyByteStringHash  l = hashlazy l
+
+ createHashList :: [String] -> [Digest SHA256]
+ createHashList a = fmap computeStringHash a      
