@@ -2,6 +2,7 @@ module Main where
  import Helpers
  import HashHelpers
  import System.IO               (hFlush, stdout)
+ import Data.Maybe
  import qualified Data.ByteString.Lazy as LazyByteString
  
  main :: IO()
@@ -43,7 +44,15 @@ module Main where
                   putStrLn("Enter a list of strings separated by the character you just provided:")
                   strLn <- getLine
                   putStrLn("Result:")
-                  print $ splitStringIntoList strLn (\s -> head sep)
+                  let ch = safeHead sep
+                  print $ fromJust ch
+                  case ch of
+                    Nothing -> putStrLn ("not good, no separator char")
+                    _ -> do 
+                         let chVal = fromJust ch
+                         let f = (\c -> c == chVal)
+                         let wordsList = wordsWhen f strLn
+                         print $ createHashList wordsList                
                   main   
         "0" -> do putStrLn("exited") 
   

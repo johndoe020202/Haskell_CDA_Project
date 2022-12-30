@@ -17,5 +17,9 @@ module HashHelpers where
  compareFiles ::  LazyByteString.ByteString ->  LazyByteString.ByteString -> Bool
  compareFiles a b = computeLazyByteStringHash a == computeLazyByteStringHash b
 
- createHashList :: [[Char]] -> [Digest SHA256]
- createHashList a = fmap computeStringHash a      
+ createHashList :: [[Char]] -> Maybe [Digest SHA256]
+ createHashList a  
+    | a == []   = Nothing
+    | otherwise = Just $ fmap computeStringHash a 
+
+      
