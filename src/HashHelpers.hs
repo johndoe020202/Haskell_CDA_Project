@@ -18,12 +18,15 @@ module HashHelpers where
  compareFiles ::  LazyByteString.ByteString ->  LazyByteString.ByteString -> Bool
  compareFiles a b = computeLazyByteStringHash a == computeLazyByteStringHash b
 
- createHashList :: [[Char]] -> Maybe [Digest SHA256]
- createHashList a  
-    | a == []   = Nothing
-    | otherwise = Just $ fmap computeStringHash a 
+ createHashList :: [[Char]] -> [Digest SHA256]
+ createHashList a = fmap computeStringHash a 
 
- merkleTree :: [[Char]] -> [Digest SHA256]
- merkleTree []  = []
- merkleTree [x] = [b | b <- computeStringHash x ] 
- merkleTree (x:y:ys) = [b | b <- computeStringHash . concatenatePair . concatenateTwoByTwo (x:y:ys) ] : merkleTree ys
+ safeCreateHashList :: [[Char]] -> Maybe [Digest SHA256]
+ safeCreateHashList a  
+    | a == []   = Nothing
+    | otherwise = Just $ createHashList a 
+
+ --merkleTree :: [[Char]] -> [Digest SHA256]
+ --merkleTree []  = []
+ --merkleTree [x] = [b | b <- fmap createHashList x ] 
+ --merkleTree (x:y:ys) = [b | b <- fmap createHashList (x:y:ys)] : merkleTree ys

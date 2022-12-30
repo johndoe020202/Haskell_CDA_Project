@@ -23,3 +23,6 @@ module Helpers where
  
  concatenatePair :: [[String]] -> [String]
  concatenatePair a = map concat $ a 
+
+
+  --print $ fromJust ch
