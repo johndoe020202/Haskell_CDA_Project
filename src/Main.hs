@@ -13,11 +13,12 @@ module Main where
   putStrLn $ "---- HashHelper program ----"
   putStrLn $ "A simple utility tool for calculating hashes of strings or files, creating Merkle trees from various values and comparing files based on hash"
   putStrLn $ "Available command switches: "
-  putStrLn $ "   1: calculate a simple SHA 256 hash of a string in input"
-  putStrLn $ "   2: calculate the SHA 256 hash of an existing file"
-  putStrLn $ "   3: compare two files passed as input"
-  putStrLn $ "   4: create a Merkle tree from a list of strings separated by a single space"
-  putStrLn $ "   0: quit" 
+  putStrLn $ "   1: Calculate the SHA 256 hash of a string"
+  putStrLn $ "   2: Calculate the SHA 256 hash of an existing file"
+  putStrLn $ "   3: Compare two files"
+  putStrLn $ "   4: Compute the Merkle root of a list of strings separated by a character"
+  putStrLn $ "   5: Check hash of string present in file"
+  putStrLn $ "   0: Quit" 
   putStrLn $ "Enter your choice: "
   line <- getLine 
   case line of
@@ -31,7 +32,7 @@ module Main where
                   fileExists <- doesFileExist filePath
                   case fileExists of
                     False -> do 
-                      putStrLn $ "File does not exist"
+                      putStrLn $ "ERROR: File does not exist"
                       main
                     _ -> do
                       fileContent <- LazyByteString.readFile filePath
@@ -60,28 +61,29 @@ module Main where
                           main
                     else
                       do 
-                        putStrLn $ "File 2 does not exist"
+                        putStrLn $ "ERROR: File" ++ filePath2 ++ " does not exist"
                         main
                   else
                     do
-                      putStrLn $ "File 1 does not exist"
+                      putStrLn $ "ERROR: File" ++ filePath1 ++ " does not exist"
                       main
         "4" -> do putStrLn $ "Enter a separator character: "
                   sep <- getLine
                   putStrLn $ "Enter a list of strings separated by the character you just provided:"
                   strLn <- getLine
-                  putStrLn $ "Result:"
                   let ch = safeHead sep
                   case ch of
-                    Nothing -> putStrLn $ "not good, no separator char"
+                    Nothing -> putStrLn $ "ERROR: Not good, invalid separator char"
                     _ -> do 
                          let chVal = fromJust ch
                          let f = (\c -> c == chVal)
                          let wordsList = wordsWhen f strLn
+                         putStrLn $ "Result:"
                          print $ safeCreateHashList wordsList                
-                  main   
-        "0" -> do putStrLn $ "exited"
-        _   -> do putStrLn $ "invalid choice"
+                  main
+           
+        "0" -> do putStrLn $ "Exited"
+        _   -> do putStrLn $ "ERROR: Invalid choice"
                   main 
   
 
