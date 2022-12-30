@@ -1,8 +1,25 @@
 ﻿# Haskell_CDA_Project
 
-This is a project meant for the Cardano CDA certification provided by emurgo.io
+## This is a project meant for the Cardano CDA certification provided by emurgo.io
 
-It is a simple utility application written in Haskell which should provide the following use cases:
-  1. If the arguments are 2 or more and the option provided is -f it should compare two or more files provided by the user as input and evaluate if the files are exctly the same
-  2. If the argument is just one and the option provided is -f, so a file, it should output the hash (SHA256) of the file provided as input
-  3. If the argument is just one and the option provided is -s, so a simple string,  it should output the hash (SHA256) of the string provided as input
+It is a simple utility console application written in Haskell which shows some use cases fore the [cryptonite library](https://hackage.haskell.org/package/cryptonite):
+
+## Application options
+Upon execution the user is prompted with a menu consisting of the following options: 
+  - "Calculate the SHA 256 hash of a string" - option "1":
+  The user must input a string and the output will be the SHA 256 hash of the provided string
+
+  - "Calculate the SHA 256 hash of an existing file" - option "2" <br>
+  The user must input the path of an existing file. 
+     - If the file does not exist the output will be that the file does not exist. If the file
+     - If the file exists the output will be the SHA 256 hash of the file
+
+  - "Compare two files" - option "3" <br>
+  The user must input the paths of two existing files ksubmitted for comparison. If any of the files does not exist the user will be prompted with the appropriate message. If the files exist the output will be the comparison of the hashes of the files provided.
+  
+  - "Compute the Merkle root of a list of strings separated by a character" - option "4" <br>
+  The user is prompted to input a separator character. Afterwards the user is prompted to input a list of strings separated by the chosen character. If the user inputs an invalid character the output will be an error message explaining the issue.
+  In the case of valid inputs the output will be a simple Merkle root computed from the list of strings provided as input
+  - "Check hash of string present in file" - option "5" <br>
+  The user is prompted to input a SHA 256 hash. Then the user is prompted to provide a separator character and the path of a text file containing plain text strings separated by the character provided. The program will check if the hash of any of the strings present in the text file corresponds to the hash provided in input. 
+    

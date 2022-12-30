@@ -1,16 +1,28 @@
 module Helpers where
  
- data SwitchType = StringHash | FileHash | CompareFiles | MerkleTree | Quit | Invalid deriving (Show, Eq)
- data Choice = Choice { 
-   switch :: SwitchType, 
-   isValid:: Bool
-  } deriving Show
+ evaluateList :: (Eq a, Show a) => [a] -> Maybe [a]
+ evaluateList [a]
+  | null $ [a]  = Nothing
+  | otherwise   = Just [a]
 
- checkSwitch :: String -> Choice 
- checkSwitch value 
-  | value == "-h"  = Choice StringHash True
-  | value == "-hf" = Choice FileHash True
-  | value == "-cf" = Choice CompareFiles True
-  | value == "-m"  = Choice MerkleTree True
-  | value == "-q"  = Choice Quit True
-  | otherwise      = Choice Invalid False
+
+ wordsWhen :: (Char -> Bool) -> [Char] -> [[Char]]
+ wordsWhen p s =  case dropWhile p s of
+                      "" -> []
+                      s' -> w : wordsWhen p s''
+                            where (w, s'') = break p s'
+
+ safeHead :: [Char] -> Maybe Char
+ safeHead []     = Nothing
+ safeHead (x:xs) = Just x  
+
+ concatenateTwoByTwo :: [a] -> [[a]]
+ concatenateTwoByTwo [] = [[]]
+ concatenateTwoByTwo [a] = [[a]]
+ concatenateTwoByTwo (x:y:ys) = [a | a <- x : y : []] : concatenateTwoByTwo ys
+ 
+ concatenatePair :: [[String]] -> [String]
+ concatenatePair a = map concat $ a 
+
+
+  --print $ fromJust ch
