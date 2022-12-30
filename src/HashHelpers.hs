@@ -1,6 +1,7 @@
 module HashHelpers where
  import Crypto.Hash             (hash, hashlazy, SHA256 (..), Digest)
  import Data.ByteString         (ByteString)
+ import Helpers
  import qualified Data.ByteString.Char8 as Char8BS
  import qualified Data.ByteString.Lazy.Internal as LazyByteString
  
@@ -22,4 +23,7 @@ module HashHelpers where
     | a == []   = Nothing
     | otherwise = Just $ fmap computeStringHash a 
 
-      
+ merkleTree :: [[Char]] -> [Digest SHA256]
+ merkleTree []  = []
+ merkleTree [x] = [b | b <- computeStringHash x ] 
+ merkleTree (x:y:ys) = [b | b <- computeStringHash . concatenatePair . concatenateTwoByTwo (x:y:ys) ] : merkleTree ys

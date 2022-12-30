@@ -21,4 +21,5 @@ module Helpers where
  concatenateTwoByTwo [a] = [[a]]
  concatenateTwoByTwo (x:y:ys) = [a | a <- x : y : []] : concatenateTwoByTwo ys
  
- 
+ concatenatePair :: [[String]] -> [String]
+ concatenatePair a = map concat $ a 
