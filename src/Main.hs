@@ -79,9 +79,32 @@ module Main where
                          let f = (\c -> c == chVal)
                          let wordsList = wordsWhen f strLn
                          putStrLn $ "Result:"
-                         print $ safeCreateHashList wordsList                
+                         print $ safeCreateHashList wordsList      -- TODO          
                   main
-           
+        "5" -> do putStrLn $ "Enter a SHA 256 hash: "
+                  hashInInput <- getLine
+                  putStrLn $ "Enter a separator character: "
+                  sep <- getLine
+                  let ch = safeHead sep
+                  case ch of
+                    Nothing -> putStrLn $ "ERROR: Not good, invalid separator char"
+                    _ -> do 
+                         putStrLn $ "Enter an existing file path: "
+                         filePath <- getLine
+                         fileExists <- doesFileExist filePath
+                         case fileExists of
+                          False -> do 
+                            putStrLn $ "ERROR: File does not exist"
+                            main
+                          _ -> do
+                            let chVal = fromJust ch
+                            let f = (\c -> c == chVal)
+                            contents <- readFile filePath
+                            print $ contents
+                            let wordsList = wordsWhen f contents
+                            print wordsList
+                            print $ createHashList $ wordsList -- TODO
+                            main   
         "0" -> do putStrLn $ "Exited"
         _   -> do putStrLn $ "ERROR: Invalid choice"
                   main 
