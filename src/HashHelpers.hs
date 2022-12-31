@@ -26,3 +26,6 @@ module HashHelpers where
  --merkleTree []  = []
  --merkleTree [x] = [b | b <- fmap createHashList x ] 
  --merkleTree (x:y:ys) = [b | b <- fmap createHashList (x:y:ys)] : merkleTree ys
+
+ pairWordsAndDigests :: [[Char]] -> [([Char], Digest SHA256)]
+ pairWordsAndDigests xs = [(x, computeStringHash x)| x <- xs] 

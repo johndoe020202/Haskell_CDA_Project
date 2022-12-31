@@ -61,11 +61,11 @@ module Main where
                           main
                     else
                       do 
-                        putStrLn $ "ERROR: File" ++ filePath2 ++ " does not exist"
+                        putStrLn $ "ERROR: File " ++ filePath2 ++ " does not exist"
                         main
                   else
                     do
-                      putStrLn $ "ERROR: File" ++ filePath1 ++ " does not exist"
+                      putStrLn $ "ERROR: File " ++ filePath1 ++ " does not exist"
                       main
         "4" -> do putStrLn $ "Enter a separator character: "
                   sep <- getLine
@@ -102,8 +102,7 @@ module Main where
                             contents <- readFile filePath
                             print $ contents
                             let wordsList = wordsWhen f contents
-                            print wordsList
-                            print $ createHashList $ wordsList -- TODO
+                            print $ pairWordsAndDigests $ wordsList -- TODO
                             main   
         "0" -> do putStrLn $ "Exited"
         _   -> do putStrLn $ "ERROR: Invalid choice"
