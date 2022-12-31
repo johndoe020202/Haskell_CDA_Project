@@ -1,4 +1,4 @@
-﻿# Haskell_CDA_Project
+﻿# Haskell sample project - CDA
 
 ## This is a project meant for the Cardano CDA certification provided by emurgo.io
 

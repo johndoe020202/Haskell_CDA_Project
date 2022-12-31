@@ -19,8 +19,8 @@ module HashHelpers where
 
  safeCreateHashList :: [[Char]] -> Maybe [Digest SHA256]
  safeCreateHashList a  
-    | a == []   = Nothing
-    | otherwise = Just $ createHashList a 
+  | a == []   = Nothing
+  | otherwise = Just $ createHashList a 
 
  --merkleTree :: [[Char]] -> [Digest SHA256]
  --merkleTree []  = []
