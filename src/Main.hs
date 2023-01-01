@@ -100,7 +100,6 @@ module Main where
                             let chVal = fromJust ch
                             let f = (\c -> c == chVal)
                             contents <- readFile filePath
-                            print $ contents
                             let wordsList = wordsWhen f contents
                             print $ pairWordsAndDigests $ wordsList -- TODO
                             main   

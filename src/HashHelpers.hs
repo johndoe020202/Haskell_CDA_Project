@@ -29,3 +29,6 @@ module HashHelpers where
 
  pairWordsAndDigests :: [[Char]] -> [([Char], Digest SHA256)]
  pairWordsAndDigests xs = [(x, computeStringHash x)| x <- xs] 
+
+ retrieveDigestIfPresent :: Digest SHA256 -> [([Char], Digest SHA256)] -> [([Char], Digest SHA256)]
+ retrieveDigestIfPresent a xs = filter (\(x,y) -> a == y) xs --boh
