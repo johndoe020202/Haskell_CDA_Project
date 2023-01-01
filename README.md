@@ -2,7 +2,7 @@
 
 ## This is a project meant for the Cardano CDA certification provided by emurgo.io
 
-It is a simple utility console application written in Haskell which shows some use cases fore the [cryptonite library](https://hackage.haskell.org/package/cryptonite):
+It is a simple utility console application written in Haskell which shows some use cases for the [cryptonite library](https://hackage.haskell.org/package/cryptonite):
 
 ## Application options
 Upon execution the user is prompted with a menu consisting of the following options: 
