@@ -61,11 +61,11 @@ module Main where
                           main
                     else
                       do 
-                        putStrLn $ "ERROR: File" ++ filePath2 ++ " does not exist"
+                        putStrLn $ "ERROR: File " ++ filePath2 ++ " does not exist"
                         main
                   else
                     do
-                      putStrLn $ "ERROR: File" ++ filePath1 ++ " does not exist"
+                      putStrLn $ "ERROR: File " ++ filePath1 ++ " does not exist"
                       main
         "4" -> do putStrLn $ "Enter a separator character: "
                   sep <- getLine
@@ -83,28 +83,35 @@ module Main where
                   main
         "5" -> do putStrLn $ "Enter a SHA 256 hash: "
                   hashInInput <- getLine
-                  putStrLn $ "Enter a separator character: "
-                  sep <- getLine
-                  let ch = safeHead sep
-                  case ch of
-                    Nothing -> putStrLn $ "ERROR: Not good, invalid separator char"
-                    _ -> do 
-                         putStrLn $ "Enter an existing file path: "
-                         filePath <- getLine
-                         fileExists <- doesFileExist filePath
-                         case fileExists of
-                          False -> do 
-                            putStrLn $ "ERROR: File does not exist"
-                            main
-                          _ -> do
-                            let chVal = fromJust ch
-                            let f = (\c -> c == chVal)
-                            contents <- readFile filePath
-                            print $ contents
-                            let wordsList = wordsWhen f contents
-                            print wordsList
-                            print $ createHashList $ wordsList -- TODO
-                            main   
+                  let digest = readDigestFromString hashInInput
+                  case digest of
+                    Nothing -> putStrLn $ "ERROR: Invalid digest in input"
+                    _ -> do
+                         putStrLn $ "Enter a separator character: "
+                         sep <- getLine
+                         let ch = safeHead sep
+                         case ch of
+                          Nothing -> putStrLn $ "ERROR: Not good, invalid separator char"
+                          _ -> do 
+                               putStrLn $ "Enter an existing file path: "
+                               filePath <- getLine
+                               fileExists <- doesFileExist filePath
+                               case fileExists of
+                                False -> do 
+                                         putStrLn $ "ERROR: File does not exist"
+                                _ -> do
+                                     let chVal = fromJust ch
+                                     let f = (\c -> c == chVal)
+                                     contents <- readFile filePath
+                                     let wordsList = wordsWhen f contents
+                                     let wordsAndDigests = pairWordsAndDigests wordsList
+                                     let properDigest = fromJust $ digest
+                                     let filteredList = retrieveDigestIfPresent properDigest wordsAndDigests
+                                     let foundValue = firstOfTupleList filteredList
+                                     case foundValue of
+                                      Nothing -> putStrLn $ "None of the values in the provided file corresponds to the provided hash"
+                                      _ -> putStrLn $ "The hash provided input is present in the file and corresponds to the value: " ++ fromJust foundValue
+                  main   
         "0" -> do putStrLn $ "Exited"
         _   -> do putStrLn $ "ERROR: Invalid choice"
                   main 

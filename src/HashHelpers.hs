@@ -1,7 +1,8 @@
 module HashHelpers where
- import Crypto.Hash             (hash, hashlazy, SHA256 (..), Digest)
- import Data.ByteString         (ByteString)
+ import Crypto.Hash             (hash, hashlazy, digestFromByteString, SHA256 (..), Digest)
+ import Data.ByteString         (ByteString, unpack)
  import Helpers
+ import Text.Read
  import qualified Data.ByteString.Char8 as Char8BS
  import qualified Data.ByteString.Lazy.Internal as LazyByteString
 
@@ -26,3 +27,18 @@ module HashHelpers where
  --merkleTree []  = []
  --merkleTree [x] = [b | b <- fmap createHashList x ] 
  --merkleTree (x:y:ys) = [b | b <- fmap createHashList (x:y:ys)] : merkleTree ys
+
+ pairWordsAndDigests :: [[Char]] -> [([Char], Digest SHA256)]
+ pairWordsAndDigests xs = [(x, computeStringHash x)| x <- xs] 
+
+ returnValueIfHashFound :: [([Char], Digest SHA256)] -> Maybe [Char]
+ returnValueIfHashFound l = firstOfTupleList l 
+ 
+ retrieveDigestIfPresent :: Digest SHA256 -> [([Char], Digest SHA256)] -> [([Char], Digest SHA256)]
+ retrieveDigestIfPresent a xs = filter (\(x,y) -> a == y) xs 
+  
+ readDigestFromString :: [Char] -> Maybe (Digest SHA256)
+ readDigestFromString a = readMaybe a
+
+ convertByteStringToString :: ByteString -> [Char]
+ convertByteStringToString a = Char8BS.unpack a
