@@ -1,7 +1,6 @@
 module HashHelpers where
  import Crypto.Hash             (hash, hashlazy, digestFromByteString, SHA256 (..), Digest)
  import Data.ByteString         (ByteString, unpack)
- import Data.ByteArray
  import Helpers
  import Text.Read
  import Data.Maybe
@@ -43,19 +42,36 @@ module HashHelpers where
  readDigestFromString a = readMaybe a
 
  digestToString :: Digest SHA256 -> Maybe [Char] 
- digestToString a = case convert a of
-                    Nothing -> Nothing
-                    Just c -> Just $ Char8BS.unpack $ fromJust c 
+ digestToString a = Just $ show a
  
- joinDigests :: Digest SHA256 -> Digest SHA256 -> Maybe [Char]
- joinDigests a b = case digestToString a of
+ safeJoinDigests :: Digest SHA256 -> Digest SHA256 -> Maybe [Char]
+ safeJoinDigests a b = case digestToString a of
                    Nothing -> Nothing
                    Just c -> case digestToString b of
                              Nothing -> Nothing
                              Just d -> Just $ c ++ d 
-                             
- -- TODO 
- --merkleTree :: Maybe [Digest SHA256] -> Maybe [Digest SHA256]
- --merkleTree []  = []
- --merkleTree [x] = [a | a <- Just x] 
- --merkleTree (x:y:ys) = [b | b <- safeComputeStringHash $ joinDigests x y] : merkleTree ys
+ 
+ concatenateStringDigests :: Digest SHA256 -> Digest SHA256 -> [Char]
+ concatenateStringDigests a b = show a ++ show b
+ 
+ joinDigests :: Digest SHA256 -> Digest SHA256 -> Digest SHA256
+ joinDigests a b = computeStringHash $ concatenateStringDigests a b
+ 
+ joinDigestPairs :: [Digest SHA256] -> [Digest SHA256]
+ joinDigestPairs [] = []
+ joinDigestPairs [x] = [x]
+ -- joinDigestPairs (x:y:[]) = [joinDigests x y]
+ joinDigestPairs (x:y:ys) = (joinDigests x y) : joinDigestPairs ys
+
+ merkleRoot :: [Digest SHA256] -> [Digest SHA256]
+ merkleRoot [] = []
+ merkleRoot [x] = [x]
+ merkleRoot xs = merkleRoot $ concat (fmap joinDigestPairs (concatenateTwoByTwo xs))
+ 
+ -- Unused
+ joinStringDigests :: [Char] -> [Char] -> Maybe (Digest SHA256)
+ joinStringDigests a b = case readDigestFromString a of
+                         Nothing -> Nothing
+                         Just dig1 -> case readDigestFromString b of
+                                      Nothing -> Nothing
+                                      Just dig2 -> Just $ joinDigests dig1 dig2
