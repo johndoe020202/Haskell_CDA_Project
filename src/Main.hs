@@ -79,16 +79,8 @@ module Main where
                          let f = (\c -> c == chVal)
                          let wordsList = wordsWhen f strLn
                          let hashedList = createHashList wordsList
-                         putStrLn "The hashed list is:"
-                         print hashedList
-                         putStrLn "concatenatetwobytwo"
-                         let x = concatenateTwoByTwo hashedList
-                         print x
-                         let mapps = fmap joinDigestPairs x
-                         putStrLn $ "fmap joinDigestPairs x"
-                         print mapps
-                         let conc = concat mapps
-                         print conc
+                         putStrLn "The HashedList is"
+                         print $ hashedList
                          putStrLn "The Merkle root is:" 
                          print $ merkleRoot hashedList          
                   main

@@ -20,7 +20,7 @@ module HashHelpers where
 
  compareFiles ::  LazyByteString.ByteString -> LazyByteString.ByteString -> Bool
  compareFiles a b = computeLazyByteStringHash a == computeLazyByteStringHash b
-
+ 
  createHashList :: [[Char]] -> [Digest SHA256]
  createHashList a = fmap computeStringHash a 
 
@@ -40,16 +40,6 @@ module HashHelpers where
   
  readDigestFromString :: [Char] -> Maybe (Digest SHA256)
  readDigestFromString a = readMaybe a
-
- digestToString :: Digest SHA256 -> Maybe [Char] 
- digestToString a = Just $ show a
- 
- safeJoinDigests :: Digest SHA256 -> Digest SHA256 -> Maybe [Char]
- safeJoinDigests a b = case digestToString a of
-                   Nothing -> Nothing
-                   Just c -> case digestToString b of
-                             Nothing -> Nothing
-                             Just d -> Just $ c ++ d 
  
  concatenateStringDigests :: Digest SHA256 -> Digest SHA256 -> [Char]
  concatenateStringDigests a b = show a ++ show b
@@ -60,7 +50,6 @@ module HashHelpers where
  joinDigestPairs :: [Digest SHA256] -> [Digest SHA256]
  joinDigestPairs [] = []
  joinDigestPairs [x] = [x]
- -- joinDigestPairs (x:y:[]) = [joinDigests x y]
  joinDigestPairs (x:y:ys) = (joinDigests x y) : joinDigestPairs ys
 
  merkleRoot :: [Digest SHA256] -> [Digest SHA256]

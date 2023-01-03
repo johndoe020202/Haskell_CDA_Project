@@ -24,5 +24,3 @@ module Helpers where
  firstOfTupleList :: [(a, b)] -> Maybe a
  firstOfTupleList [] = Nothing
  firstOfTupleList [(a, b)] = Just a
-
-  --print $ fromJust ch
